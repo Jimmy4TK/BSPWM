@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Basado en gh0stzk/dotfiles (https://github.com/gh0stzk/dotfiles), GPL-3.0. Copyright (C) 2021-2026 gh0stzk. Modificado por Jimmy Falco (Jimmy4TK), 2026.
+# https://github.com/Jimmy4TK/Workspace
+
+ID=$(ip link | awk '/state UP/ {print $2}' | tr -d : | head -n 1)
+
+if command -v nmcli >/dev/null 2>&1 ; then
+    SSID=$(nmcli -t -f active,ssid dev wifi show | sed -n '1{s/SSID: //p}')
+fi
+
+is_online() {
+	ping -c 1 linux.org &>/dev/null
+}
+
+if is_online; then
+    if [[ $ID == e* ]]; then
+        STATUS="$ID"
+        ICON="󰈀"
+    else
+        STATUS="$SSID"
+        ICON="󰖩"
+    fi
+else
+    STATUS="Offline"
+    ICON="󰖪"
+fi
+
+case "$1" in
+    --status) echo "$STATUS" ;;
+    --icon) echo "$ICON" ;;
+esac

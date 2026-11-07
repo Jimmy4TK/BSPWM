@@ -1,0 +1,4 @@
+;; Basado en gh0stzk/dotfiles (https://github.com/gh0stzk/dotfiles), GPL-3.0. Copyright (C) 2021-2026 gh0stzk. Modificado por Jimmy Falco (Jimmy4TK), 2026.
+(include "cheatsheet/cheatsheet.yuck")
+(include "calendar/calendar.yuck")
+(include "profilecard/profilecard.yuck")

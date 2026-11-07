@@ -1,0 +1,15 @@
+* {
+    font: "Terminess Nerd Font Mono Bold 10";
+    background: #1D1F28;
+    background-alt: #1D1F28E0;
+    foreground: #fdfdfd;
+    foreground-alt: #b3b3b3;
+    gradient: linear-gradient(#0f00ff, #4659c1, #9b6edb, #9e60ca);
+    urgent-gradient: linear-gradient(#db6e6e, #db966e, #de9b4a);
+    selected: #556FFF;
+    active: #18E3C8;
+    active-gradient: linear-gradient(#de9b4a, #db966e, #db6e6e);
+    urgent: #FF4971;
+
+    img-background: url("~/.config/bspwm/jimmy/rofi.webp", width);
+}

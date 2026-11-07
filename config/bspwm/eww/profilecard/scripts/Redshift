@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Basado en gh0stzk/dotfiles (https://github.com/gh0stzk/dotfiles), GPL-3.0. Copyright (C) 2021-2026 gh0stzk. Modificado por Jimmy Falco (Jimmy4TK), 2026.
+#	https://github.com/Jimmy4TK/WorkSpace
+
+cache_file=$HOME/.cache/$(whoami)/redshift_state
+
+mkdir -p "$(dirname "$cache_file")"
+[[ -f "$cache_file" ]] || echo off > "$cache_file"
+
+get_state() {
+	cat "$cache_file"
+}
+
+disable_redshift() {
+	redshift -x >/dev/null 2>&1
+	echo off >"$cache_file"
+}
+
+enable_redshift() {
+	redshift -x
+	redshift -O 3350
+	echo on >"$cache_file"
+}
+
+toggle() {
+	if [[ $(get_state) == "on" ]]; then
+		disable_redshift
+	else
+		enable_redshift
+	fi
+}
+
+case $1 in
+    state) get_state ;;
+    toggle) toggle ;;
+esac
+

@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# Basado en gh0stzk/dotfiles (https://github.com/gh0stzk/dotfiles), GPL-3.0. Copyright (C) 2021-2026 gh0stzk. Modificado por Jimmy Falco (Jimmy4TK), 2026.
+# https://github.com/Jimmy4TK/Workspace
+
+WIDGET_DIR="$HOME/.config/bspwm/eww"
+
+case "$1" in
+  --menu)
+    rofi -show drun -theme "$HOME"/.config/bspwm/src/rofi-themes/Launcher.rasi 
+    ;;
+  --terminal)
+    Term --terminal
+    ;;
+  --floating)
+    Term --floating
+    ;;
+  --update)
+    Term --update 
+    ;;
+  --checkupdates)
+    Term --checkupdates
+    ;;
+  --netmanager)
+    NetManagerDM
+    ;;
+  --bluetooth)
+    rofi-bluetooth
+    ;;
+  --clipboard)
+    rofi -modi "clipboard:greenclip print" -theme "$HOME"/.config/bspwm/src/rofi-themes/Clipboard.rasi -show clipboard -run-command '{cmd}'
+    ;;
+  --screenshot)
+    ScreenShoter
+    ;;
+  --powermenu)
+    PowerMenu
+    ;;
+  --android)
+    AndroidMount
+    ;;
+  --filemanager)
+    Term --filemanager
+    ;;
+  --nvim)
+    Term --nvim
+    ;;
+    # Apps
+    --element)
+    element-desktop
+    ;;
+    --discord)
+    discord
+    ;;
+  --browser)
+    firefox
+    ;;
+  --editor)
+    nvim
+    ;;
+  --telegram)
+    telegram-desktop
+    ;;
+  --whats)
+    whatsdesk --disable-gpu
+    ;;
+    # Eww Widgets
+    --KeyHelp)
+    eww -c "$WIDGET_DIR" open --toggle csheet
+    ;;
+  --usercard)
+    eww -c "$WIDGET_DIR" open --toggle launchermenu
+    ;;
+  --calendar)
+    eww -c "$WIDGET_DIR" open --toggle date
+    ;;
+  *)
+    echo "Invalid Option"
+    ;;
+esac
