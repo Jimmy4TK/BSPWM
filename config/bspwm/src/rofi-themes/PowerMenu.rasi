@@ -1,0 +1,105 @@
+/* Basado en gh0stzk/dotfiles (https://github.com/gh0stzk/dotfiles), GPL-3.0. Copyright (C) 2021-2026 gh0stzk. Modificado por Jimmy Falco (Jimmy4TK), 2026. */
+configuration {
+	hover-select:				true;
+	me-select-entry:			"";
+	me-accept-entry:			"MousePrimary";
+}
+
+@import "shared.rasi"
+
+window {
+    transparency:                "real";
+    location:                    north;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       460px;
+    border-radius:               20px;
+    x-offset:                    721px;
+    y-offset:                    123px;
+    cursor:                      "default";
+    background-color:            @background-alt;
+}
+
+mainbox {
+    enabled:                     true;
+    spacing:                     5px;
+    margin:                      10px;
+    background-color:            transparent;
+    children:                    [ "inputbar", "listview", "message" ];
+}
+
+inputbar {
+    enabled:                     true;
+    background-color:            transparent;
+    children:                    [ "dummy", "prompt", "dummy"];
+}
+
+dummy {
+    background-color:            transparent;
+}
+
+prompt {
+    enabled:                     true;
+    font:                        "JetBrainsMono Nerd Font Bold 20";
+    background-color:            transparent;
+    text-color:                  @selected;
+}
+
+message {
+    enabled:                     true;
+    margin:                      0px 100px;
+    padding:                     1px;
+    border-radius:               10px;
+    background-color:            white/5%;
+    text-color:                  @selected;
+}
+
+textbox {
+    font:                        "JetBrainsMono Nerd Font 8";
+    background-color:            transparent;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
+
+listview {
+    enabled:                     true;
+    expand:                      false;
+    columns:                     5;
+    lines:                       1;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    
+    spacing:                     10px;
+    background-color:            transparent;
+    cursor:                      "default";
+}
+
+element {
+    enabled:                     true;
+    padding:                     8px 0px;
+    border-radius:               10px;
+    background-color:            white/5%;
+    text-color:                  @foreground;
+    cursor:                      pointer;
+}
+
+element-text {
+    font:                        "Material Design Icons Desktop 17";
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
+
+element selected.normal {
+    background-image:            @gradient;
+    text-color:                  @foreground;
+}
+

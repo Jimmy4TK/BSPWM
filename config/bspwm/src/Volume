@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# Basado en gh0stzk/dotfiles (https://github.com/gh0stzk/dotfiles), GPL-3.0. Copyright (C) 2021-2026 gh0stzk. Modificado por Jimmy Falco (Jimmy4TK), 2026.
+#	https://github.com/Jimmy4TK/WorkSpace
+
+# Icons
+vol_dir="$HOME/.config/bspwm/assets"
+notify_cmd='dunstify -u low -h string:x-dunst-stack-tag:cvolum'
+
+# Get Volume
+get_volume() {
+    pamixer --get-volume-human | sed 's/%//'
+}
+
+# Get icons
+get_icon() {
+    current="$(get_volume)"
+    if [[ "$current" -eq "0" || "$current" == "muted" ]]; then
+        icon="$vol_dir/mute.png"
+    else
+        icon="$vol_dir/vol.png"
+    fi
+}
+
+# Notify
+notify_user() {
+    ${notify_cmd} -i "$icon" "Volume : $(get_volume)%"
+}
+
+# Adjust Volume
+adjust_volume() {
+    [[ $(pamixer --get-mute) == true ]] && pamixer -u
+    pamixer --allow-boost --set-limit 100 "$1" "$2" && get_icon && notify_user
+}
+
+# Toggle Mute
+toggle_mute() {
+    if [[ $(pamixer --get-mute) == false ]]; then
+        pamixer --toggle-mute
+        get_icon
+        message="Mute"
+    else
+        pamixer --toggle-mute
+        get_icon
+        message="Unmute"
+    fi
+    ${notify_cmd} -i "$icon" "$message"
+}
+
+# Toggle Mute Microphone
+toggle_mic() {
+  if [[ $(pamixer --get-mute --source 6) == true ]]; then
+      pamixer --toggle-mute --source 6
+      message="Microphone Unmuted"
+    else
+      pamixer --toggle-mute --source 6
+      message="Microphone Muted"
+    fi
+    ${notify_cmd} -i "$icon" "$message"
+}
+
+# Execute accordingly
+if command -v pamixer &>/dev/null; then
+    case "$1" in
+        --get) get_volume ;;
+        --inc) adjust_volume -i 5 ;;
+        --dec) adjust_volume -d 5 ;;
+        --toggle) toggle_mute ;;
+        --toggle-mic) toggle_mic ;;
+        *) echo "$(get_volume)%" ;;
+    esac
+else
+    ${notify_cmd} "'pamixer' is not installed."
+fi

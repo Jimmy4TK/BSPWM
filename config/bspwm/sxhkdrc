@@ -1,0 +1,151 @@
+# Basado en gh0stzk/dotfiles (https://github.com/gh0stzk/dotfiles), GPL-3.0. Copyright (C) 2021-2026 gh0stzk. Modificado por Jimmy Falco (Jimmy4TK), 2026.
+#	Jimmy4Tk 
+#	https://github.com/Jimmy4TK/WorkSpace
+
+#|||----- Bspwm hotkeys -----|||#
+
+# Show help
+F1
+  OpenApps --KeyHelp
+
+# Reload BSPWM
+super + alt + r
+  bspc wm -r
+
+# Reload Keybindings
+super + Escape
+  pkill -USR1 -x sxhkd; dunstify -u low -i ~/.config/bspwm/assets/reload.svg 'sxhkd' 'Se recargo la configuración!'
+
+#|||----- Base System -----|||#
+
+# Open Terminal
+super + Return
+	OpenApps --terminal
+
+# Open floating Terminal
+super + alt + Return
+	OpenApps --floating
+
+# Application menu
+super + @space
+	OpenApps --menu
+
+#|||----- WorkSpaces -----|||#
+
+# focus to the given desktop
+super + {1-9,0}
+  bspc desktop -f '^{1-9,10}'
+
+# rotate desktop
+super + r
+	bspc node @/ --rotate {90,-90}
+
+#|||----- Move/Resize -----|||#
+
+# expand a window
+super + {Left,Down,Up,Right}
+  bspc node -z {left -10 0,bottom 0 10,top 0 -10,right 10 0}
+
+# contract a window
+super + ctrl + {Left,Down,Up,Right}
+  bspc node -z {right -10 0,top 0 10,bottom 0 -10,left 10 0}
+
+# move a floating window
+super + shift + {Left,Down,Up}
+  bspc node -v {-10 0,0 10,0 -10}
+
+super + shift + Right
+  bspc node -v 10 0
+#|||----- Nodes -----|||#
+
+# Change focus of the Node or Swap Nodes
+super {_,ctrl +}{h,k,j,l}
+	bspc node -{f,s} {west,north,south,east}
+
+# Send to other workspace &  follow
+super + alt + {1-9,0}
+  bspc node -d ^{1-9,10} --follow
+
+# set the window state
+super + {t,shift + t,s}
+	bspc node -t {tiled,pseudo_tiled,floating}
+
+# alternate between the tiled and monocle layout
+super + m
+	bspc desktop -l next
+
+# set the node flags
+ctrl + alt {m,x,s,p}
+	bspc node -g {marked,locked,sticky,private}
+
+# close and kill
+super + {_,shift + }w
+  bspc node -{c,k}
+
+# focus the last node/desktop
+super + {comma,Tab}
+	bspc {node,desktop} -f last
+
+#|||----- System Apps -----|||#
+
+# Change transparency on focused window
+ctrl + alt + {plus,minus,t}
+	picom-trans {-c -o +3,-c -o -1,-c -d}
+
+# Network Manager
+super + shift + n
+	OpenApps --netmanager
+
+# Screenshot
+super + shift + s
+  OpenApps --screenshot
+
+# Bluetooth
+super + shift + b
+  OpenApps --bluetooth
+
+# Clipboard
+super + shift + c
+	OpenApps --clipboard
+
+# Mount Android phones
+super + shift + a
+  OpenApps --android
+
+#|||----- Applications -----|||#
+
+# Browser
+super + f
+  OpenApps --browser
+
+# Ranger
+super + e
+	OpenApps --filemanager
+
+#|||----- Power -----|||#
+
+# Power off, Reboot, Log out, kill an app
+ctrl + super + alt + {p,r,q,k}
+  {systemctl poweroff, systemctl reboot,bspc quit,xkill}
+
+# Lock
+ctrl + super + alt + l
+  $HOME/.config/bspwm/src/.lock.sh
+
+#####
+
+# jgmenu
+~button3
+  xqp 0 $(xdo id -N Bspwm -n root) && jgmenu --csv-file=~/.config/bspwm/src/jgmenu/menu.txt --config-file=~/.config/bspwm/jgmenurc
+
+# Manage brightness
+XF86MonBrightness{Up,Down}
+  Brightness {up,down}
+
+# Volume control
+XF86Audio{RaiseVolume,LowerVolume,Mute,MicMute}
+	Volume{ --inc, --dec, --toggle, --toggle-mic}
+
+# Music Control
+XF86Audio{Next,Prev,Play,Stop}
+	MediaControl {--next,--previous,--toggle,--stop}

@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Basado en gh0stzk/dotfiles (https://github.com/gh0stzk/dotfiles), GPL-3.0. Copyright (C) 2021-2026 gh0stzk. Modificado por Jimmy Falco (Jimmy4TK), 2026.
+
+options=(
+    ""
+    ""
+    ""
+    ""
+    ""
+)
+
+rofi_cmd() {
+	rofi -dmenu \
+		-p "Nos re vimos ${USER}" \
+		-mesg "Uptime: $(uptime -p | sed -e 's/up //g')" \
+		-theme "$HOME"/.config/bspwm/src/rofi-themes/PowerMenu.rasi
+}
+
+chosen=$(printf "%s\n" "${options[@]}" | rofi_cmd)
+
+case $chosen in
+    "")
+        systemctl poweroff
+        ;;
+    "")
+        systemctl reboot
+        ;;
+    "")
+        mpc -q pause
+        amixer set Master mute
+        systemctl suspend
+        ;;
+    "")
+        bspc quit
+        ;;
+    "")
+        "${HOME}"/.config/bspwm/src/.lock.sh
+        ;;
+esac

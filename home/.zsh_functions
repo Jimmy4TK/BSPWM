@@ -1,0 +1,35 @@
+# Funciones de zsh para BSPWM.
+# El instalador lo copia a ~/.zsh_functions y Zsh-Config
+# (https://github.com/Jimmy4TK/Zsh-Config) lo carga si existe.
+
+# Pomodoro: notificaciones de concentración y descanso
+pomodoro() {
+  (~/.config/bspwm/src/pomodoro.sh --open &)
+}
+
+close_pomodoro() {
+  ~/.config/bspwm/src/pomodoro.sh --close
+}
+
+# Objetivo que muestra la Polybar: `target <ip>` lo fija, sin argumentos lo imprime
+target() {
+  if [ -n "$1" ]; then
+    echo "$1" > ~/.config/bspwm/src/.target
+  else
+    cat ~/.config/bspwm/src/.target
+  fi
+}
+
+unset_target() {
+  echo "No Target" > ~/.config/bspwm/src/.target
+}
+
+# Widgets de eww con la configuración de BSPWM
+eww() {
+  command eww --config ~/.config/bspwm/eww/ "$@"
+}
+
+# Renombrar la pestaña actual de kitty
+rnkitty() {
+  kitty @ set-tab-title "$@"
+}

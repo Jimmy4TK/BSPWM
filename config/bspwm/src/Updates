@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# url: https://github.com/Jimmy4TK/WorkSpace
+
+get_packages() { 
+  pacman -Qq | wc -l
+}
+
+get_updates() { 
+  checkupdates 2>/dev/null | wc -l
+}
+
+update_system() {
+    sudo pacman -Syu
+}
+
+print_updates() { 
+  checkupdates 2>/dev/null | awk '{print $1}'
+}
+
+case "$1" in
+    --get-updates) get_updates ;;
+    --get-packages) get_packages ;;
+    --print-updates) print_updates ;;
+    --update-system) update_system ;;
+    --help|*)echo -e "Updates [options]
+
+Options:
+	--get-updates		  Get the number of updates available.
+	--get-packages		Get the number of packages.
+  --print-updates   Show the packages with updates available. 
+	--update-system		Update your system.\n"
+esac
